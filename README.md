@@ -144,4 +144,4 @@ quant-forecast/
 3. 💪 Begin coding data ingestion scripts
 
 API AND KEYS
-1.https://www.alphavantage.co/support/#api-key : OAMTD9BGJ01HYGUX
+1.Alpha Vantage : https://www.alphavantage.co/support/#api-key : OAMTD9BGJ01HYGUX
