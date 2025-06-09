@@ -142,3 +142,6 @@ quant-forecast/
 1. ✅ Finalize project scope (this doc)
 2. 🔧 Create MSSQL schemas
 3. 💪 Begin coding data ingestion scripts
+
+API AND KEYS
+1.https://www.alphavantage.co/support/#api-key : OAMTD9BGJ01HYGUX
