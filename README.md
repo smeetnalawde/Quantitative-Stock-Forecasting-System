@@ -2,7 +2,7 @@
 
 ## 🧠 Objective
 
-Build a predictive system to forecast 5-day stock returns and generate actionable trade signals (`BUY`, `SELL`, `HOLD`) using a combination of:
+Build a predictive system to forecast 5-day stock returns and generate actionable trade signals (`BUY`, `SELL`, `HOLD`) using:
 
 - Historical price data
 - Technical indicators
@@ -10,138 +10,148 @@ Build a predictive system to forecast 5-day stock returns and generate actionabl
 - Fundamental factors
 - Macro-economic indicators
 
+---
+
 ## 🌟 Primary Goals
 
 ### 🎯 1. Expected Return Forecasting (Regression)
-- **Objective**: Predict short-term % returns (e.g., next 5-10 days)
-- **Use Case**: Alpha generation, portfolio optimization
-- **Model Type**: Regression (XGBoost, LSTM, Transformer)
+- Predict 5-10 day % returns
+- Model: XGBoost, LSTM, Transformer
 
-### 🎯 2. Signal Generation (Multi-class Classification)
-- **Objective**: Translate return predictions into discrete trading signals
-- **Use Case**: Strategy automation and backtesting
-- **Model Type**: Classification
+### 🎯 2. Signal Generation (Classification)
+- Convert returns into `BUY`, `SELL`, `HOLD`
+- Model: Classifier
 
 ### 🎯 3. Volatility Forecasting (Risk Modeling)
-- **Objective**: Predict risk levels over the next N days
-- **Use Case**: Risk-adjusted allocations, position sizing, trade filtering
-- **Model Type**: GARCH, LSTM, Transformer-based models
+- Predict N-day risk
+- Model: GARCH, LSTM, Transformer
+
+---
 
 ## 🔍 Scope
 
-- Initial tickers: AAPL, TSLA, MSFT, AMZN, NVDA
-- Time horizon: All available historical data (from listing date)
-- Environment: Local-only, macOS (Apple Silicon), PyCharm, MSSQL
+- Tickers: AAPL, TSLA, MSFT, AMZN, NVDA
+- Time Horizon: All available historical data
+- Environment: Local-only, macOS (Apple Silicon), PyCharm
+- Database: ✅ **PostgreSQL**
+
+---
 
 ## 🤩 Data Sources
 
-| Type               | Source/API              |
-|--------------------|-------------------------|
-| Price Data         | Alpha Vantage, Yahoo Finance |
-| Technical Indicators | TA-Lib, pandas-ta        |
-| Sentiment          | GNews API, Reddit        |
-| Fundamentals       | Financial Modeling Prep  |
-| Macroeconomics     | FRED API                 |
+| Type                | Source/API                      |
+|---------------------|----------------------------------|
+| Price Data          | Alpha Vantage, Yahoo Finance     |
+| Technical Indicators| TA-Lib, pandas-ta                |
+| Sentiment           | GNews API, Reddit                |
+| Fundamentals        | Financial Modeling Prep          |
+| Macroeconomics      | FRED API                         |
+
+---
 
 ## 🧠 Architecture Overview
 
-1. Data Collection & Ingestion
-2. Preprocessing & Feature Engineering
-3. Label Generation
-4. Model Training (XGBoost / LSTM / Transformer)
-5. Signal Classification
-6. Volatility Forecasting
-7. Backtesting (Backtrader)
-8. Evaluation & Risk Adjustment
-9. Tableau Dashboard (via MSSQL)
-10. Automated ETL + Retrain Schedulers
+1. ✅ Data Collection & Ingestion  
+2. ✅ Preprocessing & Feature Engineering (`technical_features`)  
+3. 🔜 Label Generation (`target`, 5-day return)  
+4. 🔜 Model Training  
+5. 🔜 Signal Classification  
+6. 🔜 Volatility Modeling  
+7. 🔜 Backtesting  
+8. 🔜 Evaluation & Risk Adjustment  
+9. 🔜 Tableau Dashboard  
+10. 🔜 Automated Retraining + ETL
 
-## 📦 Dependencies (to be installed later)
+---
+
+## 📦 Dependencies (setup later)
 
 - Python 3.11+
-- pandas, numpy, scikit-learn, xgboost
-- SQLAlchemy, pyodbc
-- TA-Lib, vaderSentiment
-- Backtrader
+- `pandas`, `numpy`, `scikit-learn`, `xgboost`
+- `sqlalchemy`, `psycopg2`, `dotenv`
+- `vaderSentiment`, `TA-Lib`
+- `backtrader`
+- `yfinance` (for historical data)
 - Tableau Desktop (local)
 
-## 🗓️ Milestone 1: Setup + Data Ingestion
+---
 
-- [x] Finalize project scope (this doc)
-- [ ] Initialize Git repo
-- [ ] Create conda/venv environment
-- [ ] Setup MSSQL DB and tables
-- [ ] Build API wrappers for Alpha Vantage and GNews
-- [ ] Load raw price + sentiment data into MSSQL
+## 🗓️ Milestone 1: Setup + Ingestion ✅
+
+- ✅ Finalized scope
+- ✅ Initialized Git repo
+- ✅ Created `.env` with PostgreSQL + API keys
+- ✅ Built and tested `fetch_prices.py`
+- ✅ Created and populated `price_data` table
+- ✅ Created and tested `compute_technical.py`
+- ✅ Generated `technical_features` in PostgreSQL
+
+---
 
 ## 🧭 Project Roadmap
 
 ### Milestone 2: Feature Engineering
-- [ ] Merge technical, sentiment, and macro features
-- [ ] Normalize and handle missing values
-- [ ] Add lag-based and rolling-window indicators
+- 🔜 Merge technical, sentiment, macro
+- 🔜 Normalize and handle nulls
+- 🔜 Lag + rolling features
 
 ### Milestone 3: Label Creation
-- [ ] Compute 5-day forward return
-- [ ] Encode `BUY/SELL/HOLD` signals
+- 🔜 Compute 5-day return
+- 🔜 Encode labels for classification
 
 ### Milestone 4: Model Training
-- [ ] Train XGBoost and baseline regressors
-- [ ] Validate using time-series split
-- [ ] Optimize hyperparameters
+- 🔜 Train XGBoost, baseline classifiers
+- 🔜 Time-series split + eval
+- 🔜 Save trained model
 
-### Milestone 5: Backtesting & Evaluation
-- [ ] Build Backtrader-based simulation
-- [ ] Evaluate strategy metrics (Sharpe, drawdown, win ratio)
+### Milestone 5: Backtesting
+- 🔜 Simulate strategy with `Backtrader`
 
 ### Milestone 6: Volatility Modeling
-- [ ] Build risk models using GARCH / LSTM
-- [ ] Integrate volatility into position sizing
+- 🔜 Build GARCH / LSTM models
+- 🔜 Add volatility-adjusted signals
 
-### Milestone 7: Tableau Dashboard
-- [ ] Export predictions to MSSQL
-- [ ] Build dashboard for signal monitoring
+### Milestone 7: Dashboard
+- 🔜 Export results to PostgreSQL
+- 🔜 Build Tableau dashboard
 
 ### Milestone 8: Automation
-- [ ] Daily ETL + prediction job
-- [ ] Weekly model retrain scheduler
+- 🔜 Daily ingestion, retrain scripts
 
 ---
 
-## 📂 Folder Structure (Planned)
+## 📂 Folder Structure
 
-```
+```bash
 quant-forecast/
 │
 ├── data_ingestion/
-│   └── fetch_prices.py
-│   └── fetch_sentiment.py
+│   ├── fetch_prices.py            # ✅ Done
+│   ├── fetch_sentiment.py         # In progress
+│   ├── fetch_fundamentals.py      # 🔜 To be added
+│   └── fetch_macro.py             # 🔜 To be added
+│
 ├── features/
-│   └── compute_technical.py
-│   └── merge_features.py
+│   ├── compute_technical.py       # ✅ Done
+│   └── merge_features.py          # 🔜 Next
+│
 ├── models/
-│   └── train_model.py
-│   └── predict_signals.py
-│   └── volatility_model.py
+│   ├── train_model.py             # 🔜
+│   ├── predict_signals.py         # 🔜
+│   └── volatility_model.py        # 🔜
+│
 ├── backtesting/
-│   └── simulate_strategy.py
+│   └── simulate_strategy.py       # 🔜
+│
 ├── dashboard/
-│   └── tableau_exports/
+│   └── tableau_exports/           # 🔜
+│
 ├── utils/
-│   └── sql_connector.py
+│   └── sql_connector.py           # ✅ optional
+│
 ├── notebooks/
-│   └── exploratory_analysis.ipynb
-├── requirements.txt
+│   └── exploratory_analysis.ipynb # Optional
+│
+├── requirements.txt               # ✅ to update
+├── .env.template                  # ✅ PostgreSQL + API
 └── README.md
-```
-
----
-
-## 🔄 Next Steps
-
-1. ✅ Finalize project scope (this doc)
-2. 🔧 Create MSSQL schemas
-3. 💪 Begin coding data ingestion scripts
-
-API AND KEYS
-1.Alpha Vantage : https://www.alphavantage.co/support/#api-key : OAMTD9BGJ01HYGUX
