@@ -1,8 +1,6 @@
-# models/sentiment_data_model.py
-
 from sqlalchemy import Column, String, Float, Integer, Date, Text, DateTime
-from sqlalchemy.ext.declarative import declarative_base
-from datetime import datetime
+from sqlalchemy.orm import declarative_base
+from datetime import datetime, timezone
 
 Base = declarative_base()
 
@@ -22,4 +20,4 @@ class SentimentData(Base):
     platform_tags = Column(String(100))
     model_used = Column(String(50))
     confidence = Column(Float, default=None)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
